@@ -76,13 +76,14 @@ def forget():
 def reset():
     uname=request.form.get('uname')
     email = request.form.get('email')
-    getinfo = db.session.query(User).filter_by(uname=uname,email=email)
+    getinfo = User.query.filter_by(uname=uname,email=email)
     smail="psp51790@gmail.com"
     if getinfo.count()==1:
         pas=''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
-        getinfo.passw=pas
+        type(getinfo)
         message="Hello There %s .<br>Your Password has been generated .<br>Your password is <strong>%s</strong>.<br>Please login with this password to change password"%(uname,pas)
         #msg=MIMEText(message,'html')
+        getinfo.update(dict(passw=pas))
         db.session.commit()
         mail.send_message(subject="Password Generated",html=message,sender=smail,recipients = [email])
         return "Hello"
