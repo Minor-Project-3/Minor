@@ -11,9 +11,11 @@ from werkzeug.utils import secure_filename
 import os
 from database import db,User,Post,follows,liketab
 from flask_mail import Mail
+from datetime import datetime
 
 
 app=Flask(__name__)
+app.config['UPLOAD_FOLDER']=r'C:\Users\1\Desktop\Minor Project\static\uploads'
 app.secret_key='United'
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:saksham@localhost/minor'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
@@ -26,7 +28,7 @@ app.config.update(
 )
 mail = Mail(app)
 
-
+i=0
 db.init_app(app)
 with app.app_context():
     db.create_all()
@@ -88,7 +90,39 @@ def reset():
         mail.send_message(subject="Password Generated",html=message,sender=smail,recipients = [email])
         return "Hello"
     else:
-        return "Hi"        
+        return "Hi"  
+
+@app.route("/upload",methods=['POST','GET'])
+def upload():
+    if (request.method =="POST"):
+        f=request.files['file']
+        ptitle=request.form.get('ptitle')
+        global i
+        i=i+1
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(f.filename)))
+        # path=str(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(f.filename+str(i)))
+        path=secure_filename(f.filename)
+        # print(path) 
+        post=Post(ptitle=ptitle,pdate=datetime.now(),pdesc="Hello",uid=1,pimgpath=path,likes=0,active=1)  
+        db.session.add(post)
+        db.session.commit()
+        return "uploaded"
+    else:
+        return "sorry"
+
+@app.route("/uploadPost",methods=['POST','GET'])
+def uploadPost():
+    return render_template("upload.html")    
+
+@app.route("/retimg",methods=['POST','GET'])
+def retimg():
+    info=db.session.query(Post)
+    return render_template("test.html",post=info)
+
+@app.route('/display/<filename>')
+def display_image(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],filename=filename)
+	
 
 if __name__=="__main__":
     app.run(debug=True)

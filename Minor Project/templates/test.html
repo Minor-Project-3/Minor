@@ -1,0 +1,9 @@
+<html>
+    <head></head>
+    <body>
+        {%for post in post %}
+        {{post.ptitle}}
+        <img src="{{ url_for('display_image', filename=post.pimgpath) }}">
+        {%endfor%}
+    </body>
+</html>

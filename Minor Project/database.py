@@ -46,14 +46,13 @@ class Post(db.Model):
     uid=db.Column(db.Integer,db.ForeignKey('user.uid'),nullable=False)
     #lik=db.relationship('user',secondary=liketab)
 
-    def __init__(self, pid, ptitle,pdate,desc,uid,img,like=0,act=1):
-        self.pid=pid
+    def __init__(self, ptitle,pdate,pdesc,uid,pimgpath,likes=0,active=1):
         self.ptitle=ptitle
         self.pdate=pdate
-        self.pdesc=desc
-        self.pimgpath=img
-        self.likes=like
-        self.active=act
+        self.pdesc=pdesc
+        self.pimgpath=pimgpath
+        self.likes=likes
+        self.active=active
         self.uid=uid
 
     
