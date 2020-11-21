@@ -47,11 +47,19 @@ def login():
             if getinfo==1:
                 session['logged_in'] = True
                 return ('dashboard')
+            elif Custname=="admin" and Custpass=="admin":
+                session['logged_in'] = True
+                return render_template('admindashboard.html',name=Custname)
             else:
                 return render_template('index.html')
     else:
         flash('Already logged in')
         return render_template("index.html")
+
+@app.route("/logout")  
+def logout():
+    session['logged_in'] = False
+    return redirect("/")
 
 
 @app.route("/signup", methods = ['GET', 'POST'])
@@ -122,7 +130,16 @@ def retimg():
 @app.route('/display/<filename>')
 def display_image(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],filename=filename)
-	
+
+@app.route('/userlist')
+def userlist():
+    info=db.session.query(User)
+    return render_template('userlist.html',info=info)
+
+@app.route("/adminDashboard",methods=['POST','GET'])
+def adminDashBoard():
+    return render_template("upload.html") 
+
 
 if __name__=="__main__":
     app.run(debug=True)
