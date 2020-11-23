@@ -12,6 +12,7 @@ import os
 from database import db,User,Post,follows,liketab
 from flask_mail import Mail
 from datetime import datetime
+from passlib.hash import sha256_crypt
 
 
 app=Flask(__name__)
@@ -39,26 +40,23 @@ def index():
 
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
-    if not session.get('logged_in'):
-        if(request.method=='POST'):
-            Custname = request.form.get('user')
-            Custpass = request.form.get('pass')
-            getinfo = db.session.query(User).filter_by(uname=Custname,passw=Custpass).count()
-            if getinfo==1:
-                session['logged_in'] = True
-                return ('dashboard')
-            elif Custname=="admin" and Custpass=="admin":
-                session['logged_in'] = True
-                return render_template('admindashboard.html',name=Custname)
-            else:
-                return render_template('index.html')
-    else:
-        flash('Already logged in')
-        return render_template("index.html")
+    if(request.method=='POST'):
+        Custname = request.form.get('user')
+        Custpass = request.form.get('pass')
+        getinfo = db.session.query(User).filter_by(uname=Custname).first()
+        if Custname=="admin" and Custpass=="admin":
+            session['user'] = "admin"
+            return render_template('admindashboard.html',name=Custname)
+        elif sha256_crypt.verify(Cupstpass, getinfo.passw):
+            session['user'] = Custname
+            return ('dashboard')
+        else:
+            return render_template('index.html')
 
 @app.route("/logout")  
 def logout():
-    session['logged_in'] = False
+    print(session['user'])
+    session.pop('user', None)
     return redirect("/")
 
 
@@ -71,12 +69,15 @@ def signup():
         rpassw = request.form.get('rpassw')
         email= request.form.get('email')
         phno = request.form.get('phno')
-        if passw==rpassw:
-            user1=User(passw=passw,uName=uname,name=name,cont=phno,ema=email,descrp="Hi There I am using Fake Book")
+        info=db.session.query(User).filter_by(uname=uname).count()
+        if passw==rpassw and info!=1:
+            passs=sha256_crypt.encrypt(passw)
+            user1=User(passw=passs,uName=uname,name=name,cont=phno,ema=email,descrp="Hi There I am using Fake Book")
             db.session.add(user1)
             db.session.commit()
-
-        return "HEllo"
+            return "HEllo"
+        else:
+            return "Username Already Exist"
 
 @app.route("/forget",methods = ['GET', 'POST'])
 def forget():
@@ -111,7 +112,7 @@ def upload():
         # path=str(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(f.filename+str(i)))
         path=secure_filename(f.filename)
         # print(path) 
-        post=Post(ptitle=ptitle,pdate=datetime.now(),pdesc="Hello",uid=1,pimgpath=path,likes=0,active=1)  
+        post=Post(ptitle=ptitle,pdate=datetime.now(),pdesc="Hello",uid=1,pimgpath=path,likes=0,active=0)  
         db.session.add(post)
         db.session.commit()
         return "uploaded"
@@ -122,10 +123,20 @@ def upload():
 def uploadPost():
     return render_template("upload.html")    
 
-@app.route("/retimg",methods=['POST','GET'])
-def retimg():
-    info=db.session.query(Post)
-    return render_template("test.html",post=info)
+@app.route("/displayPost/<posttype>",methods=['POST','GET'])
+def displayPost(posttype):
+    if posttype=="fair":
+        info=db.session.query(Post).filter_by(active=1).all()
+        return render_template("test.html",post=info)
+    if posttype=="blocked":
+        info=db.session.query(Post).filter_by(active=0).all()
+        return render_template("test.html",post=info)
+    if posttype=="critical":
+        info=db.session.query(User).filter_by(terror_count=2).all()
+        return render_template("userlist.html",info=info)
+    if posttype=="blockedusr":
+        info=db.session.query(User).filter_by(terror_count=3).all()
+        return render_template("userlist.html",info=info)
 
 @app.route('/display/<filename>')
 def display_image(filename):
