@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../static/js/hoempage.js "></script>
+    <link rel="stylesheet" href="../static/css/homepage.css">
+    <title>Homepage</title>
+</head>
+<body>
+    <div class="topnav">
+        <div class="topnav-container">
+            <div class="logo">
+                <a href="">Social Media</a>
+            </div>
+            <div class="nav-elements">
+                <div class="nav-elements-item">
+                    <a href=""><i class="fa fa-home"> Home</i></a>
+                </div>
+                <div class="nav-elements-item">
+                    <a href=""><i class="fa fa-list-alt"> Following</i></a>
+                </div>
+                <div class="nav-elements-item">
+                    <a href=""><i class="fa fa-bell"> Notifications</i></a>
+                </div>
+            </div>
+            <div class="nav-search">
+                <i class="fa fa-search"></i>
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="profile-pic"><a href="profile.html"></a></div>
+            <div class="add-post-btn">
+                <button>New Post</button>
+            </div>
+            <div class="dropdown">
+                <button id="dropbtn" onclick="dropdownFunction()"><i class="fa fa-caret-down"></i></button>
+                <div class="dropdown-content" id="droplist">
+                    <a href="#">Settings</a>
+                    <a href="#">Activity Log</a>
+                    <hr>
+                    <a href="#">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main"> 
+        <div class="container">
+            <div class="main-content">
+                <div class="new-post">
+                    <div class="new-post-head">
+                        <div id="profile-pic"></div>
+                        <div><p id="profile-name">Pranav</p></div>
+                    </div>
+                    <div class="new-post-body">
+                        Your Thoughts today?
+                    </div>
+                </div>
+
+                <div class="other-posts">
+                    <div class="post-head">
+                        <div class="user-pic"></div>
+                        <div class="post-detail">
+                            <div class="user-name">pranav sonare</div>
+                            <div class="post-date">November,1<sup>st</sup></div>
+                        </div>
+                    </div>
+                    <div class="post-body">
+                        <div class="post-title">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus aperiam minima</div>
+                        <div class="post-pic"></div>
+                        <div class="post-description">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, 
+                            nisi lorem egestas vitae scel<span id="dots">...</span>
+                            <span id="more">erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, 
+                            auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, 
+                            sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis.
+                             Donec vitae dui eget tellus gravida venenatis. 
+                            Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.</span>
+                            <a onclick="myFunction()" id="myBtn">read more</a>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="likes">
+                            <i class="fa fa-thumbs-up"> <span id="likes-count">100</span></i>
+                        </div>
+                        <div class="comments">
+                            <i class="fa fa-comment"> 10</i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-posts">
+                    <div class="post-head">
+                        <div class="user-pic"></div>
+                        <div class="post-detail">
+                            <div class="user-name">pranav sonare</div>
+                            <div class="post-date">November,1<sup>st</sup></div>
+                        </div>
+                    </div>
+                    <div class="post-body">
+                        <div class="post-title">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus aperiam minima</div>
+                        <div class="post-pic"></div>
+                        <div class="post-description">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, 
+                            nisi lorem egestas vitae scel<span id="dots">...</span>
+                            <span id="more">erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, 
+                            auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, 
+                            sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis.
+                             Donec vitae dui eget tellus gravida venenatis. 
+                            Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.</span>
+                            <a onclick="myFunction()" id="myBtn">read more</a>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="likes">
+                            <i class="fa fa-thumbs-up"> <span id="likes-count">100</span></i>
+                        </div>
+                        <div class="comments">
+                            <i class="fa fa-comment"> 10</i>
+                        </div>
+                    </div>
+                    <!-- comment section of post -->
+                    <div class="comment-section">
+
+                    </div>
+                </div>
+
+                <div class="other-posts">
+                    <div class="post-head">
+                        <div class="user-pic"></div>
+                        <div class="post-detail">
+                            <div class="user-name">pranav sonare</div>
+                            <div class="post-date">November,1<sup>st</sup></div>
+                        </div>
+                    </div>
+                    <div class="post-body">
+                        <div class="post-title">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus aperiam minima</div>
+                        <div class="post-pic"></div>
+                        <div class="post-description">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, 
+                            nisi lorem egestas vitae scel<span id="dots">...</span>
+                            <span id="more">erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, 
+                            auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, 
+                            sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis.
+                             Donec vitae dui eget tellus gravida venenatis. 
+                            Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.</span>
+                            <a onclick="myFunction()" id="myBtn">read more</a>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="likes">
+                            <i class="fa fa-thumbs-up"> <span id="likes-count">100</span></i>
+                        </div>
+                        <div class="comments">
+                            <i class="fa fa-comment"> 10</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- for side green space used for ......... -->
+            <div class="side-content">
+                hello again
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
