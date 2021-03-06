@@ -16,6 +16,7 @@ from passlib.hash import sha256_crypt
 
 
 app=Flask(__name__)
+model = tf.keras.models.load_model('model (1).h5') 
 app.config['UPLOAD_FOLDER']=r'C:\Users\1\Desktop\Minor Project\static\uploads'
 app.secret_key='United'
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:saksham@localhost/minor'
@@ -47,7 +48,7 @@ def login():
         if Custname=="admin" and Custpass=="admin":
             session['user'] = "admin"
             return render_template('admindashboard.html',name=Custname)
-        elif sha256_crypt.verify(Cupstpass, getinfo.passw):
+        elif sha256_crypt.verify(Custpass, getinfo.passw):
             session['user'] = Custname
             return ('dashboard')
         else:
@@ -106,13 +107,14 @@ def upload():
     if (request.method =="POST"):
         f=request.files['file']
         ptitle=request.form.get('ptitle')
+        pdesc=request.form.get('desc')
         global i
         i=i+1
         f.save(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(f.filename)))
         # path=str(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(f.filename+str(i)))
         path=secure_filename(f.filename)
         # print(path) 
-        post=Post(ptitle=ptitle,pdate=datetime.now(),pdesc="Hello",uid=1,pimgpath=path,likes=0,active=0)  
+        post=Post(ptitle=ptitle,pdate=datetime.now(),pdesc=pdesc,uid=1,pimgpath=path,likes=0,active=0)  
         db.session.add(post)
         db.session.commit()
         return "uploaded"
@@ -151,6 +153,17 @@ def userlist():
 def adminDashBoard():
     return render_template("upload.html") 
 
+@app.route("/predictImg/<str:path>",methods=['POST','GET'])
+def predictImg(path):
+  test_image = image.load_img(path, target_size = (64, 64))
+  test_image = image.img_to_array(test_image)
+  test_image = np.expand_dims(test_image, axis = 0)
+  result = model.predict(test_image)
+  if result[0][0] == 1:
+      prediction = 'terror'
+  else:
+      prediction = 'person'
+  print(prediction)
 
 if __name__=="__main__":
     app.run(debug=True)
