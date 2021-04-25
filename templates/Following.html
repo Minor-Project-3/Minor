@@ -1,0 +1,46 @@
+<html>
+    <head><title>Following</title>
+    
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="../static/js/hoempage.js "></script>
+        <link rel="stylesheet" href="../static/css/homepage.css">
+    </head>
+
+    <body>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Profile Picture</th>
+                        <th>UserName</th>
+                        <th>Name</th>
+                        <th>View Profile</th>
+                        <th>Follow</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Profile Picture</th>
+                        <th>UserName</th>
+                        <th>Name</th>
+                        <th>View Profile</th>
+                        <th>Follow</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {%for user in users %}
+                    <tr>
+                        <td><img src="..\static\uploads\333b1950-9502-43be-b692-b30d1c7751da.jpg" height="200px" width="300px"></td>
+                        <td>{{user.uname}}</td>
+                        <td>{{user.name}}</td>
+                        <td><a href="#">View Profile</td>
+                        <td><form action="{{url_for('follow',id=user.uid)}}" method="POST"><input type="submit" value="Follow" class="button5" ></form></td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

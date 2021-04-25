@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../static/js/hoempage.js "></script>
+    <link rel="stylesheet" href="../static/css/homepage.css">
+    <title>Homepage</title>
+</head>
+<body>
+    <div class="topnav">
+        <div class="topnav-container">
+            <div class="logo">
+                <a href="">Social Media</a>
+            </div>
+            <div class="nav-elements">
+                <div class="nav-elements-item">
+                    <a href="{{url_for('Myprofile')}}"><i class="fa fa-home"> My Profile</i></a>
+                </div>
+                <div class="nav-elements-item">
+                    <a href="{{url_for('followingList')}}"><i class="fa fa-list-alt"> Following</i></a>
+                </div>
+                <div class="nav-elements-item">
+                    <a href="{{url_for('chathome')}}"><i class="fa fa-bell"> Chat</i></a>
+                </div>
+            </div>
+            <div class="nav-search">
+                <i class="fa fa-search"></i>
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="profile-pic"><a href="profile.html"></a></div>
+            <div class="add-post-btn">
+               <form action="/uploadPost"> <button>New Post</button></form>
+            </div>
+            <div class="dropdown">
+                <button id="dropbtn" onclick="dropdownFunction()"><i class="fa fa-caret-down"></i></button>
+                <div class="dropdown-content" id="droplist">
+                    <a href="#">Settings</a>
+                    <a href="#">Activity Log</a>
+                    <hr>
+                    <a href="{{url_for('logout')}}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main"> 
+        <div class="container">
+            <div class="main-content">
+                <div class="new-post">
+                    <div class="new-post-head">
+                        <div id="profile-pic"></div>
+                        <div><p id="profile-name">{{unam}}</p></div>
+                    </div>
+                    <div class="new-post-body">
+                        <input type="textarea" >
+                    </div>
+                    <marquee>{{mesg}}</marquee>
+                </div>
+                {%for users,i in c %}
+                    
+                    {%for post in i%}
+                <div class="other-posts">
+                    <div class="post-head">
+                        <div class="user-pic"></div>
+                        <div class="post-detail">
+                            <div class="user-name">{{users.uname}}</div>
+                            <div class="post-date">{{ post.pdate}}<sup>st</sup></div>
+                        </div>
+                    </div>
+
+                    <div class="post-body" id="abc">
+                        <div class="post-title">{{ post.ptitle}}</div>
+                        <img src="../{{post.pimgpath}}" class="post-pic">
+                        <div class="post-description">{{post.pdesc[0:10]}}<span id="dots">...</span>
+                            <span id="more">{{post.pdesc[10:]}}</span>
+                            <a onclick="myFunction()" id="myBtn">read more</a>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="likes" id="like">
+                            <button class="raam"  pid="{{post.pid}}">{{post.likes}}</button>
+                        </div>
+                    </div>
+                   
+                </div>
+                
+                 {%endfor%}
+                 {%endfor%}
+               
+
+                
+            </div>
+            
+          
+            <!-- for side green space used for ......... -->
+            <div class="side-content">
+                <form action="{{url_for('followUser')}}" method="Post"><input type="submit" value="You may Know"> </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(".raam").click(function(){
+ 
+         
+        
+      
+ 
+ var qid=$(this).attr('pid')
+
+  req=$.ajax({
+          url:'/like',
+          type:'POST',
+          data:{pid:qid}
+      });
+     
+ 
+    
+          });
+
+            
+     </script>
+</html>

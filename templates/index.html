@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>FAKE BOOK</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../static/css/index.css">
+<script src="../static/js/granim.min.js"></script>
+
+<style>
+    .bloc-logo {
+    position: relative;
+    width: 100%;
+    height: 69px;
+    margin: 0;
+}
+
+.bloc-logo canvas,
+.bloc-logo .logo-mask {
+    display: block;
+    width: 100%;
+    height: 69px;
+}
+
+.bloc-logo .logo-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-size: 130px;
+    background-image: url("../img/logo-mask.png");
+    text-indent: -9999px;
+}
+</style>
+
+</head>
+<body>
+    <div class="top-nav">
+        <div class="bloc-logo">
+            <canvas id="logo-canvas"></canvas>
+            <a href="index.html" class="logo-mask">sakku</a>
+        </div>
+    </div>
+    <marquee >{{mess}}</marquee>
+    <div class="login-wrap">
+        <div class="login-html">
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+            <div class="login-form">
+                <form action={{ url_for('login') }} method="POST">
+                <div class="sign-in-htm">
+                    <div class="group">
+                        <label for="user" class="label">Username</label>
+                        <input id="user" type="text" class="input" name="user">
+                    </div>
+                    <div class="group">
+                        <label for="pass" class="label">Password</label>
+                        <input id="pass" type="password" class="input" name="pass" data-type="password">
+                    </div>
+                    <div class="group">
+                        <input id="check" type="checkbox" class="check" checked>
+                        <label for="check"><span class="icon"></span> Keep me Signed in</label>
+                    </div>
+                    <div class="group">
+                        <input type="submit" class="button" value="Sign In">
+                    </div>
+                    <div class="hr"></div>
+                    <div class="footer-link">
+                        <a href={{url_for('forget')}}>Forgot Password?</a>
+                    </div>
+                </div>
+                </form>
+                <form action={{ url_for('signup') }} method="POST">
+                <div class="sign-up-htm">
+                    <div class="group">
+                        <label for="user" class="label">Username</label>
+                        <input id="user" name="uname" type="text" class="input">
+                    </div>
+                    <div class="group">
+                        <label for="pass" class="label">Password</label>
+                        <input id="pass" name="passw" type="password" class="input" data-type="password">
+                    </div>
+                    <div class="group">
+                        <label for="pass" class="label">Repeat Password</label>
+                        <input id="pass" name="rpassw" type="password" class="input" data-type="password">
+                    </div>
+                    <div class="group">
+                        <label for="mail" class="label">Name</label>
+                        <input name="name" type="text" class="input">
+                    </div>
+                    <div class="group">
+                        <label for="mail" class="label">Email Address</label>
+                        <input id="mail" name="email" type="email" class="input">
+                    </div>
+                    <div class="group">
+                        <label for="user" class="label">Contact No.</label>
+                        <input id="user" name="phno" type="text" class="input">
+                    </div>
+                    <div class="group">
+                        <input type="submit" class="button" value="Sign Up">
+                    </div>
+                    <div class="hr"></div>
+                    <div class="footer-lnk">
+                        <label for="tab-1">Already Member?</a>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+<script>
+    var granimInstance = new Granim({
+    element: '#logo-canvas',
+    direction: 'left-right',
+    states : {
+        "default-state": {
+            gradients: [
+                ['#EB3349', '#F45C43'],
+                ['#FF8008', '#FFC837'],
+                ['#4CB8C4', '#3CD3AD'],
+                ['#24C6DC', '#514A9D'],
+                ['#FF512F', '#DD2476'],
+                ['#DA22FF', '#9733EE']
+            ],
+            transitionSpeed: 2000
+        }
+    }
+});
+</script>
+</body>
+</html>

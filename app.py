@@ -17,11 +17,20 @@ import tensorflow as tf
 import joblib
 import numpy as np
 from keras.preprocessing import image
+from chat import app1
+from flask_socketio import SocketIO, join_room, leave_room, emit
+from flask_session import Session
+
 
 
 
 app=Flask(__name__)
 loaded_model = joblib.load('./pipeline.sav')
+
+app.config['SESSION_TYPE'] = 'filesystem'
+app.debug = True
+Session(app)
+socketio = SocketIO(app, manage_session=False)
 
 model = tf.keras.models.load_model('model (1).h5') 
 app.config['UPLOAD_FOLDER']=r'static\uploads'
@@ -53,9 +62,12 @@ def login():
         Custname = request.form.get('user')
         Custpass = request.form.get('pass')
         getinfo = db.session.query(User).filter_by(uname=Custname).first()
+        
         if Custname=="admin" and Custpass=="admin":
             session['user'] = "admin"
             return render_template('admindashboard.html',name=Custname)
+        if getinfo.terror_count>=3:
+            return render_template("index.html",mess="Your Account has been deactivated please contact Us at our mail")    
         elif sha256_crypt.verify(Custpass, getinfo.passw):
             session['user'] = Custname
             session['uid']=getinfo.uid
@@ -76,7 +88,7 @@ def login():
 
 @app.route("/logout")  
 def logout():
-    print(session['user'])
+    
     session.pop('user', None)
     return redirect("/")
 
@@ -125,30 +137,53 @@ def reset():
 @app.route("/upload",methods=['POST','GET'])
 def upload():
     if (request.method =="POST"):
+        user=session['uid']
         f=request.files['file']
         ptitle=request.form.get('ptitle')
         pdesc=request.form.get('desc')
         i=0
         f.save(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(f.filename)))
         path=str(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(f.filename)))
-        print(path)
         result = loaded_model.predict([pdesc])
-        print(result)
+        
         test_image = image.load_img(path, target_size = (64, 64))
         test_image = image.img_to_array(test_image)
         test_image = np.expand_dims(test_image, axis = 0)
         result1 = model.predict(test_image)
-        if result1[0][0] == 1:
+        if result1[0][0] == 1 or str(result)=='[1]':
             prediction = 'terror'
-            i=0   
+            i=0
+            getinfo=db.session.query(User).filter_by(uid=user)
+            uname=getinfo.first().name
+            k=getinfo.first().terror_count
+            k+=1
+            print(k)
+            getinfo.update({User.terror_count:k})
+            db.session.commit()
+            smail="psp51790@gmail.com"
+            email=getinfo.first().email
+            message="Hello There %s .<br>Your post has been detected as terrorist related post .<br>Please reply at this email if not intentionaly done by you "%(uname)
+            mail.send_message(subject="Terrorism detected",html=message,sender=smail,recipients = [email])
         else:
             prediction = 'person'
             i=1
-        print(prediction) 
         post=Post(ptitle=ptitle,pdate=datetime.now(),pdesc=pdesc,uid=session['uid'],pimgpath=path,likes=0,active=i)  
         db.session.add(post)
         db.session.commit()
-        return render_template("homepage.html",unam=session['user'],mesg="Post Uploaded Successfully")
+        b=session['uid']
+        a = db.session.execute("SELECT * FROM follows WHERE uid_who=:param ",{"param": b})
+        names = [row[1] for row in a]
+        c,d=[],[]
+        for i in names :
+            getinfo = db.session.query(User).filter_by(uid=i).order_by(func.random()).all()
+            c.append(getinfo[0])
+        for j in c:
+            get = db.session.query(Post).filter_by(uid=j.uid,active=1).order_by(Post.pdate.desc()).all()
+            d.append(get)
+        if prediction =='person':
+            return render_template("homepage.html",unam=session['user'],mesg="Post Uploaded Successfully",c=zip(c,d))
+        else:
+            return render_template("homepage.html",unam=session['user'],mesg="Terrorism Detected.....",c=zip(c,d))
     else:
         return "sorry"
 
@@ -163,13 +198,17 @@ def displayPost(posttype):
         return render_template("test.html",post=info)
     if posttype=="blocked":
         info=db.session.query(Post).filter_by(active=0).all()
-        return render_template("test.html",post=info)
+        return render_template("test.html",post=info,postType=['blocked'])
     if posttype=="critical":
         info=db.session.query(User).filter_by(terror_count=2).all()
         return render_template("userlist.html",info=info)
     if posttype=="blockedusr":
         info=db.session.query(User).filter_by(terror_count=3).all()
         return render_template("userlist.html",info=info)
+
+
+
+
 
 @app.route('/display/<filename>')
 def display_image(filename):
@@ -189,6 +228,19 @@ def deletePost(id):
     db.session.query(Post).filter_by(pid=id).delete()
     db.session.commit()
     return render_template('admindashboard.html')
+
+@app.route("/MarkasfairPost/<string:id>",methods=['POST'])
+def MarkasfairPost(id): #foregin key
+    db.session.query(Post).filter_by(pid=id).update({Post.active:1})
+    getinfo=  db.session.query(Post).filter_by(pid=id).first()
+    userid=getinfo.uid
+    getinfo1=  db.session.query(User).filter_by(uid=userid).first()
+    terror_count=getinfo1.terror_count
+    terror_count-=1
+    db.session.query(User).filter_by(uid=userid).update({User.terror_count:terror_count})
+    db.session.commit() 
+    return render_template('admindashboard.html')
+
 
 @app.route("/followUser",methods=['POST'])
 def followUser():
@@ -291,10 +343,73 @@ def Myprofile():
 @app.route("/like",methods=['POST','GET'])
 def like():
     if (request.method =="POST"):
-        f=request.form['pid']
-        print(f)
+        f=request.form.get('pid')
+        user=session['uid']
+        a = db.session.execute("INSERT INTO liketab VALUES(:param,:id,:date)",{"param": user,"id":f,"date":datetime.now()})
+        getinfo = db.session.query(Post).filter_by(pid=f).first()
+        count=getinfo.likes
+        count+=1
+        db.session.query(Post).filter_by(pid=f).update({Post.likes:count})
+        db.session.commit()
         return "H"
         
+@app.route('/chathome', methods=['GET', 'POST'])
+def chathome():
+    return render_template('chatlogin.html')
+
+@app.route('/chat', methods=['GET', 'POST'])
+def chat():
+    if(request.method=='POST'):
+        session['username']=session['user']
+        room = request.form['room']
+        #Store the data in session
+        
+        session['room'] = room
+        return render_template('chat.html', session = session)
+    else:
+        if(session.get('username') is not None):
+            return render_template('chat.html', session = session)
+        else:
+            return redirect(url_for('chathome'))
+
+@socketio.on('join', namespace='/chat')
+def join(message):
+    room = session.get('room')
+    join_room(room)
+    emit('status', {'msg':  session.get('username') + ' has entered the room.'}, room=room)
+
+
+@socketio.on('text', namespace='/chat')
+def text(message):
+    room = session.get('room')
+    emit('message', {'msg': session.get('username') + ' : ' + message['msg']}, room=room)
+
+
+@socketio.on('left', namespace='/chat')
+def left(message):
+    room = session.get('room')
+    username = session.get('username')
+    leave_room(room)
+    emit('status', {'msg': username + ' has left the room.'}, room=room)
+
+@app.route('/homepage',methods=['GET', 'POST'])
+def homepage():
+    user=session['uid']
+    a = db.session.execute("SELECT * FROM follows WHERE uid_who=:param ",{"param": user})
+    names = [row[1] for row in a]
+    c,d=[],[]
+    for i in names :
+        getinfo = db.session.query(User).filter_by(uid=i).order_by(func.random()).all()
+        c.append(getinfo[0])
+    for j in c:
+        get = db.session.query(Post).filter_by(uid=j.uid,active=1).order_by(Post.pdate.desc()).all()
+        d.append(get)
+                    
+    return render_template("homepage.html",unam=session['user'],c=zip(c,d))
+
+
 if __name__=="__main__":
-    app.run(debug=True)
+    socketio.run(app)
+    # app.run(debug=True)
+    
 
