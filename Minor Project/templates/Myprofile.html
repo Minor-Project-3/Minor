@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link rel="stylesheet" type="text/css" href="../static/css/css-animate.css">
+<link rel="stylesheet" type="text/css" href="../static/css/css-bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../static/css/css-flatpickr.min.css">
+<link rel="stylesheet" type="text/css" href="../static/css/css-line-awesome.css">
+<link rel="stylesheet" type="text/css" href="../static/css/css-line-awesome-font-awesome.min.css">
+<link href="../static/css/css-all.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../static/css/css-font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="../static/css/slick-slick.css">
+<link rel="stylesheet" type="text/css" href="../static/css/slick-slick-theme.css">
+<link rel="stylesheet" type="text/css" href="../static/css/css-style.css">
+<link rel="stylesheet" type="text/css" href="../static/css/css-responsive.css">
+</head>
+<body oncontextmenu="return false;">
+<div class="wrapper">
+<header>
+<div class="container">
+<div class="header-data">
+<div class="logo">
+
+</div>
+
+<nav>
+<ul>
+<li>
+<a href="index.html" title="">
+<span><img src="../static/images/images-icon1.png" alt=""></span>
+Home
+</a>
+</li>
+<li>
+<a href="#" title="" class="not-box-openm">
+<span><img src="../static/images/images-icon6.png" alt=""></span>
+Messages
+</a>
+<div class="notification-box msg" id="message">
+<div class="nt-title">
+<h4>Setting</h4>
+<a href="#" title="">Clear all</a>
+</div>
+</div>
+</li>
+<li>
+<a href="#" title="" class="not-box-open">
+<span><img src="../static/images/images-icon7.png" alt=""></span>
+Notification
+</a>
+<div class="notification-box noti" id="notification">
+<div class="nt-title">
+<h4>Setting</h4>
+<a href="#" title="">Clear all</a>
+</div>
+<div class="nott-list">
+<div class="notfication-details">
+<div class="noty-user-img">
+<img src="../static/images/resources-ny-img1.png" alt="">
+</div>
+<div class="notification-info">
+<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
+<span>2 min ago</span>
+</div>
+</div>
+<div class="notfication-details">
+<div class="noty-user-img">
+<img src="../static/images/resources-ny-img2.png" alt="">
+</div>
+<div class="notification-info">
+<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
+<span>2 min ago</span>
+</div>
+</div>
+<div class="notfication-details">
+<div class="noty-user-img">
+<img src="../static/images/resources-ny-img3.png" alt="">
+</div>
+<div class="notification-info">
+<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
+<span>2 min ago</span>
+</div>
+</div>
+<div class="notfication-details">
+<div class="noty-user-img">
+<img src="../static/images/resources-ny-img2.png" alt="">
+</div>
+<div class="notification-info">
+<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
+<span>2 min ago</span>
+</div>
+</div>
+<div class="view-all-nots">
+<a href="#" title="">View All Notification</a>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</nav>
+<div class="menu-btn">
+<a href="#" title=""><i class="fa fa-bars"></i></a>
+</div>
+<div class="user-account">
+<div class="user-info">
+<img src="../static/images/resources-user.png" alt="">
+<a href="#" title="">John</a>
+<i class="la la-sort-down"></i>
+</div>
+<div class="user-account-settingss">
+<div class="search_form">
+<form>
+<input type="text" name="search">
+<button type="submit">Ok</button>
+</form>
+</div>
+<h3 class="tc"><a href="sign-in.html" title="">Logout</a></h3>
+</div>
+</div>
+</div>
+</div>
+</header>
+<section class="cover-sec">
+<img src="../static/images/resources-cover-img.jpg" alt="">
+<div class="add-pic-box">
+<div class="container">
+<div class="row no-gutters">
+<div class="col-lg-12 col-sm-12">
+<input type="file" id="file">
+<label for="file">Change Image</label>
+</div>
+</div>
+</div>
+</div>
+</section>
+<main>
+<div class="main-section">
+<div class="container">
+<div class="main-section-data">
+<div class="row">
+<div class="col-lg-3">
+<div class="main-left-sidebar">
+<div class="user_profile">
+<div class="user-pro-img">
+<img src="../static/images/resources-user-pro-img.png" alt="">
+<div class="add-dp" id="OpenImgUpload">
+<input type="file" id="file">
+<label for="file"><i class="fas fa-camera"></i></label>
+</div>
+</div>
+<div class="user_pro_status">
+<ul class="flw-status">
+<li>
+<span>Following</span>
+<b><a href="{{url_for('followingList')}}">{{users.following_count}}</a></b>
+</li>
+<li>
+<span>Followers</span>
+<b><a href="{{url_for('followerList')}}">{{users.follower_count}}</a></b>
+</li>
+</ul>
+</div>
+<ul class="social_links">
+<li><a href="#" title=""><i class="la la-globe"></i> www.example.com</a></li>
+</ul>
+</div>
+<div class="suggestions full-width">
+<div class="sd-title">
+<h3>People Viewed Profile</h3>
+<i class="la la-ellipsis-v"></i>
+</div>
+<div class="suggestions-list">
+<div class="suggestion-usd">
+<img src="../static/images/resources-s1.png" alt="">
+<div class="sgt-text">
+<h4>Jessica William</h4>
+<span>Graphic Designer</span>
+</div>
+<span><i class="la la-plus"></i></span>
+</div>
+<div class="view-more">
+<a href="#" title="">View More</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-6">
+<div class="main-ws-sec">
+<div class="user-tab-sec rewivew">
+<h3>{{ users.name}}</h3>
+<div class="star-descp">
+<span>{{users.descrp}}</span>
+<a href="#" title="">Change Description</a>
+</div>
+</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+{%for post in post %}
+<div class="product-feed-tab current" id="feed-dd">
+<div class="posts-section">
+<div class="post-bar">
+<div class="post_topbar">
+<div class="usy-dt">
+<img src="../static/images/resources-us-pic.png" alt="">
+<div class="usy-name">
+<h3>{{users.name}}</h3>
+<span><img src="../static/images/images-clock.png" alt="">{{post.pdate}}</span>
+</div>
+</div>
+<div class="ed-opts">
+<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+<ul class="ed-options">
+<li><a href="#" title="">Edit Post</a></li>
+<!-- <li><a href="#" title="">Unbid</a></li> -->
+<li><a href="#" title="">Remove Post</a></li>
+</ul>
+</div>
+</div>
+<div class="epi-sec">
+<ul class="bk-links">
+<li><a href="#" title=""><i class="la la-bookmark"></i></a></li>
+<li><a href="#" title=""><i class="la la-envelope"></i></a></li>
+</ul>
+</div>
+<div class="job_descp">
+<h3>{{post.ptitle}}</h3>
+<img src="../{{post.pimgpath}}" class="post-pic">
+<p>{{post.pdesc}}<a href="#" title="">view more</a></p>
+<ul class="skill-tags">
+<li><a href="#" title="">HTML</a></li>
+</ul>
+</div>
+<div class="job-status-bar">
+<ul class="like-com">
+<li>
+<a href="#"><i class="fas fa-heart"></i> Like</a>
+<img src="../static/images/images-liked-img.png" alt="">
+<span>{{post.likes}}</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+{%endfor%}
+</div>
+<div class="col-lg-3">
+<div class="right-sidebar">
+<div class="widget widget-portfolio">
+<div class="wd-heady">
+<h3>Most Liked Posts</h3>
+<img src="../static/images/images-photo-icon.png" alt="">
+</div>
+<div class="pf-gallery">
+<ul>
+<li><a href="#" title=""><img src="../static/images/resources-pf-gallery1.png" alt=""></a></li>
+<li><a href="#" title=""><img src="../static/images/resources-pf-gallery2.png" alt=""></a></li>
+<li><a href="#" title=""><img src="../static/images/resources-pf-gallery3.png" alt=""></a></li>
+<li><a href="#" title=""><img src="../static/images/resources-pf-gallery4.png" alt=""></a></li>
+<li><a href="#" title=""><img src="../static/images/resources-pf-gallery5.png" alt=""></a></li>
+<li><a href="#" title=""><img src="../static/images/resources-pf-gallery6.png" alt=""></a></li>
+<li><a href="#" title=""><img src="../static/images/resources-pf-gallery7.png" alt=""></a></li>
+<li><a href="#" title=""><img src="../static/images/resources-pf-gallery8.png" alt=""></a></li>
+<li><a href="#" title=""><img src="../static/images/resources-pf-gallery9.png" alt=""></a></li>
+<li><a href="#" title=""><img src="../static/images/resources-pf-gallery10.png" alt=""></a></li>
+<li><a href="#" title=""><img src="../static/images/resources-pf-gallery11.png" alt=""></a></li>
+<li><a href="#" title=""><img src="../static/images/resources-pf-gallery12.png" alt=""></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer>
+<div class="footy-sec mn no-margin">
+<div class="container">
+<ul>
+<li><a href="help-center.html" title="">Help Center</a></li>
+<li><a href="about.html" title="">About</a></li>
+</ul>
+<p><img src="../static/images/images-copy-icon2.png" alt="">Copyright @2021</p>
+</div>
+</div>
+</footer>
+</div>
+<script type="text/javascript" src="../static/js/9998-js-jquery.min.js"></script>
+<script type="text/javascript" src="../static/js/9725-js-popper.js"></script>
+<script type="text/javascript" src="../static/js/397-js-bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/js/733-js-flatpickr.min.js"></script>
+<script type="text/javascript" src="../static/js/slick-slick.min.js"></script>
+<script type="text/javascript" src="../static/js/7507-js-script.js"></script>
+</body>
+</html>

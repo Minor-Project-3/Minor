@@ -305,12 +305,8 @@
 }
 
 .post-pic{
-    width: 100%;
-    height: 300px;
-    background-image: url(../uploads/mic.jpeg);
-    background-size: auto;
-    background-repeat: no-repeat;
-    margin-bottom: 10px;
+    width: 100px;
+    height: 50px;
 }
 
 .post-description{

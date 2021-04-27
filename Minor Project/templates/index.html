@@ -27,7 +27,7 @@
     top: 0;
     left: 0;
     background-size: 130px;
-    background-image: url("../img/logo-mask.png");
+    background-image: url("../static/images/prosdfsost.jpeg");
     text-indent: -9999px;
 }
 </style>
@@ -40,73 +40,84 @@
             <a href="index.html" class="logo-mask">sakku</a>
         </div>
     </div>
-    
-    <div class="login-wrap">
-        <div class="login-html">
-            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-            <div class="login-form">
-                <form action={{ url_for('login') }} method="POST">
-                <div class="sign-in-htm">
-                    <div class="group">
-                        <label for="user" class="label">Username</label>
-                        <input id="user" type="text" class="input" name="user">
-                    </div>
-                    <div class="group">
-                        <label for="pass" class="label">Password</label>
-                        <input id="pass" type="password" class="input" name="pass" data-type="password">
-                    </div>
-                    <div class="group">
-                        <input id="check" type="checkbox" class="check" checked>
-                        <label for="check"><span class="icon"></span> Keep me Signed in</label>
-                    </div>
-                    <div class="group">
-                        <input type="submit" class="button" value="Sign In">
-                    </div>
-                    <div class="hr"></div>
-                    <div class="footer-link">
-                        <a href={{url_for('forget')}}>Forgot Password?</a>
+    <marquee>{{mess}}</marquee>
+    <div class="content">
+        <div class="sub-content">
+            <div class="info-content">
+                <img src="../static/images/provost.jpeg" width="400" style="color:#c8c8c8;;" height="350" alt="">     
+            </div>
+        </div>
+        <div class="sub-content">
+            <div class="login-wrap">
+                <div class="login-html">
+                    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+                    <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                    <div class="login-form">
+                        <form action={{ url_for('login') }} method="POST">
+                        <div class="sign-in-htm">
+                            <div class="group">
+                                <label for="user" class="label">Username</label>
+                                <input id="user" type="text" class="input" name="user">
+                            </div>
+                            <div class="group">
+                                <label for="pass" class="label">Password</label>
+                                <input id="pass" type="password" class="input" name="pass" data-type="password">
+                            </div>
+                            <div class="group">
+                                <input id="check" type="checkbox" class="check" checked>
+                                <label for="check"><span class="icon"></span> Keep me Signed in</label>
+                            </div>
+                            <div class="group">
+                                <input type="submit" class="button" value="Sign In">
+                            </div>
+                            <div class="hr"></div>
+                            <div class="footer-link">
+                                <a href={{url_for('forget')}}>Forgot Password?</a>
+                            </div>
+                        </div>
+                        </form>
+                        <form action={{ url_for('signup') }} method="POST">
+                        <div class="sign-up-htm">
+                            <div class="group">
+                                <label for="user" class="label">Username</label>
+                                <input id="user" name="uname" type="text" class="input">
+                            </div>
+                            <div class="group">
+                                <label for="pass" class="label">Password</label>
+                                <input id="pass" name="passw" type="password" class="input" data-type="password">
+                            </div>
+                            <div class="group">
+                                <label for="pass" class="label">Repeat Password</label>
+                                <input id="pass" name="rpassw" type="password" class="input" data-type="password">
+                            </div>
+                            <div class="group">
+                                <label for="mail" class="label">Name</label>
+                                <input name="name" type="text" class="input">
+                            </div>
+                            <div class="group">
+                                <label for="mail" class="label">Email Address</label>
+                                <input id="mail" name="email" type="email" class="input">
+                            </div>
+                            <div class="group">
+                                <label for="user" class="label">Contact No.</label>
+                                <input id="user" name="phno" type="text" class="input">
+                            </div>
+                            <div class="group">
+                                <input type="submit" class="button" value="Sign Up">
+                            </div>
+                            <div class="hr"></div>
+                            <div class="footer-lnk">
+                                <label for="tab-1">Already Member?</a>
+                            </div>
+                        </div>
+                    </form>
                     </div>
                 </div>
-                </form>
-                <form action={{ url_for('signup') }} method="POST">
-                <div class="sign-up-htm">
-                    <div class="group">
-                        <label for="user" class="label">Username</label>
-                        <input id="user" name="uname" type="text" class="input">
-                    </div>
-                    <div class="group">
-                        <label for="pass" class="label">Password</label>
-                        <input id="pass" name="passw" type="password" class="input" data-type="password">
-                    </div>
-                    <div class="group">
-                        <label for="pass" class="label">Repeat Password</label>
-                        <input id="pass" name="rpassw" type="password" class="input" data-type="password">
-                    </div>
-                    <div class="group">
-                        <label for="mail" class="label">Name</label>
-                        <input name="name" type="text" class="input">
-                    </div>
-                    <div class="group">
-                        <label for="mail" class="label">Email Address</label>
-                        <input id="mail" name="email" type="email" class="input">
-                    </div>
-                    <div class="group">
-                        <label for="user" class="label">Contact No.</label>
-                        <input id="user" name="phno" type="text" class="input">
-                    </div>
-                    <div class="group">
-                        <input type="submit" class="button" value="Sign Up">
-                    </div>
-                    <div class="hr"></div>
-                    <div class="footer-lnk">
-                        <label for="tab-1">Already Member?</a>
-                    </div>
-                </div>
-            </form>
             </div>
         </div>
     </div>
+    
+    
 
 <script>
     var granimInstance = new Granim({

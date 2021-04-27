@@ -110,6 +110,9 @@
                                                 <th>image</th>
                                                 <th>uid</th>
                                                 <th>Delete Post</th>
+                                                {% if "blocked" in postType %}
+                                                <th>Mark as Fair Post</th>
+                                                {%endif %}
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -121,6 +124,9 @@
                                                 <th>image</th>
                                                 <th>uid</th>
                                                 <th>Delete Post</th>
+                                                {% if "blocked" in postType %}
+                                                <th>Mark as Fair Post</th>
+                                                {%endif %}
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -130,9 +136,12 @@
                                                 <td>{{post.ptitle}}</td>
                                                 <td>{{post.pdate}}</td>
                                                 <td>{{post.pdesc}}</td>
-                                                <td><img src="{{ url_for('display_image', filename=post.pimgpath) }}" height="200px" width="300px"></td>
+                                                <td><img src="../{{post.pimgpath}}" height="200px" width="300px"></td>
                                                 <td>{{post.uid}}</td>
-                                                <td><button class="button5">Delete</button></td>
+                                                <td><form action="{{url_for('deletePost',id=post.pid)}}" method="POST"><input type="submit" value="Delete" class="button5" ></form></td>
+                                                {% if "blocked" in postType %}
+                                                <td><form action="{{url_for('MarkasfairPost',id=post.pid)}}" method="POST"><input type="submit" value="Mark_as_fair" class="button5" ></form></td>
+                                                {% endif %}
                                             </tr>
                                             {%endfor%}
                                         </tbody>

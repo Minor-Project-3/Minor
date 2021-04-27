@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="..\static\css\homeoagenew.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="../static/js/hoempage.js"></script>
+</head>
+<body>
+	<!-- Header section -->
+	<div class="headerfixed">
+        <div class="header">
+            <div class="wrapper">   
+                <a href="homepage.html"><img src="../static/uploads/logo.png" width=120 height=45 class="logoletter"/></a>
+        
+                <form id="searching">
+                  <input type="text" name="search" placeholder="Search.." id="search">
+                </form>
+    
+                <div class="icon-bar">
+                 <ul>
+                     <!-- home -->
+                     <li style="border-bottom: 6px solid white;"><a href="home.html" onmouseover="headerchange(1);" onmouseout="headerorigin(1);"><img src="../static/images/home.png" id="home"><p id="p1">Home</p></a></li>
+                     <!-- profile -->
+                     <li> <a href="{{url_for('Myprofile')}}" onmouseover="headerchange(2);" onmouseout="headerorigin(2);"><img src="../static/images/profile.png" id="profile"><p id="p2">Profile</p></a> </li>
+                     <!-- following -->
+                     <li><a href="{{url_for('followingList')}}" onmouseover="headerchange(3);" onmouseout="headerorigin(3);"><img src="../static/images/foloowing.png" id="following"><p id="p3">Following</p></a></li>
+                     <!-- notification -->
+                     <li><a href="chatlogin.html" onmouseover="headerchange(4);" onmouseout="headerorigin(4);"><img src="../static/images/chat.png" id="chats"><p id="p4">&nbsp&nbspChats</p></a>
+                     <!-- <div id="notify">
+                         <p>No New Notification</p>
+                         <hr style="background-color:white;width: 90%;">
+                         <div id="notify-list">
+                             <p>Saksham is Muscular</p>
+                             <p>Saksham is Popular</p>
+                             <p>Saksham is Spectacular</p>
+                             <p>Saksham is Bachelor</p>
+                             <p>Saksham got High Speed Car</p>
+                             <p>Saksham got Light Blue Eyes</p>
+                             <p>But Saksham Can't Dance Salla</p>
+                         </div>
+                     </div> -->
+                     </li>
+                 </ul>	 
+                </div>
+            </div>
+        </div>
+	</div>
+	<!-- End of header section -->
+
+
+<!-- Content Section -->
+	<div class="content">
+		<div class="wrapper">
+
+			<!-- Left section -->
+			<div class="leftfixed">
+				<div class="sidebarleft">
+					<img src="../static/uploads/mic.jpeg"/>
+					<p id="sidename"> {{unam}}</p>
+					<p id="info"> IPS Academy </p>
+					<p id="country">India</p>
+					<hr>
+					<p id="nofollowers">10</p>
+					<p id="followerlist"><a href="#">Followers</a></p>
+					<p id="logout"><a href="{{url_for('logout')}}">Log Out</a></p>
+				</div>
+			</div>
+			<!-- End  -->
+
+			<!--  Main section -->
+			<div class="mainnotfixed" id="mainnotfixed">
+				<!-- For  posting a content -->
+				<div class="main mainpost" style="margin-bottom:20px; padding-bottom:10px;">	
+
+					<div class="userimg"><img src="../static/uploads/mic.jpeg"/>
+						</div>
+					    <div class="username"><p class="name" style="top:15px;">{{unam}}</p>
+					    </div>
+                        <p class="title">
+                            <input type="text" placeholder="Post Title">
+                        </p>
+						<p class="quotes">
+							<textarea id="mypara" placeholder="Share an article ,photo ,video or idea."></textarea>
+						</p>
+						<!-- image load to post -->
+						<div class="post">
+							<img id="" class="postimg" src=" "/>
+						</div>
+
+						<div class="postbar">
+							<input type="file" accept="images/*" id="chooseimg"  onmouseover="onbuttoncolor()" onmouseout="outbuttoncolor()"/>
+							<button type="button" class="imgbttn" id="imgbttn">&#x1f4f7; Images</button>
+							<button type="button" id="postmypost" class="postmypost" onclick="mypost();">Post</button>
+						</div>
+
+				</div>
+				<!-- End of posting content -->
+				<hr>
+
+				<!-- Posted content  -->
+				<div class="allpost">
+					<div class="mainpost">
+						<div class="userimg"><img src="../static/uploads/mic.jpeg"/>
+						</div>
+					    <div class="username"><p class="name">{{users.uname}}</p>
+					    </div>
+						<p class="date">{{ post.pdate}}</p>
+                        <p class="title">
+                            {{ post.ptitle}}
+                        </p>
+						<p class="quotes">
+                            {{post.pdesc[0:10]}}
+                        </p>
+						<div class="post">
+							<img class="postimg" src="../{{post.pimgpath}}"/>
+						</div>
+
+						<div class="likedislike">
+							<p class="like">
+								<span id="likes-count">{{post.likes}}</span> likes
+							</p>
+							<p class="likedisbttn">
+								<span id="thumbsup1"><i class="fa fa-thumbs-up"> </i></span>
+							</p>
+						</div>
+
+					</div>
+	
+
+					<!-- Demo -->
+					<div class="mainpost">
+						<div class="userimg"><img src="../static/uploads/mic.jpeg"/>
+						</div>
+					    <div class="username">				
+                            <p class="name">Pranav Sonare</p>
+					    </div>
+						<p class="date">February 30, 3030</p>
+						<p class="quotes">
+							A gender-equal society would be one where the word 'gender' does not exist: where everyone can be themselves.
+						</p>
+						<div class="post">
+							<img class="postimg" src="../static/uploads/5.jpg"/>
+						</div>
+
+						<div class="likedislike">
+							<p class="like">
+								<span>0 </span> likes &nbsp <span>0 </span> dislikes
+							</p>
+							<p class="likedisbttn">
+								<span id="thumbsup2" class="fa fa-thumbs-up" ></span> <span id="thumbsdown2" class="fa fa-thumbs-down"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<button type="button" id="viewmore" class="viewmore">View More</button>
+			</div>
+			<!-- End of main content section -->
+
+			<!-- start of right section suggestion user -->
+			<div class="rightfixed">
+				<div class="suggesfixed"><p id="suggestion">Suggestions</p></div>
+				<div class="sidebarright">
+					<div class="rightcontent">
+						<img src="../static/uploads/mic.jpeg"/>
+						<p class="name">Pranav Sakku Vd Micky Sonare</p>
+						<a href="#" id="connect1" onclick="changelogo('connect1');">&#x271A; Connect</a>
+					</div>
+
+					<div class="rightcontent">
+						<img src="../static/uploads/mic.jpeg"/>
+						<p class="name">Sakku Saksham Agrawal</p>
+						<a href="#" id="connect2" onclick="changelogo('connect2');">&#x271A; Connect</a>
+					</div>
+
+					<div class="rightcontent">
+						<img src="../static/uploads/mic.jpeg"/>
+						<p class="name">VD</p>
+						<a href="#" id="connect3" onclick="changelogo('connect3');">&#x271A; Connect</a>
+					</div>
+
+					<div class="rightcontent">
+						<img src="../static/uploads/mic.jpeg"/>
+						<p class="name">Micky</p>
+						<a href="#" id="connect4" onclick="changelogo('connect4');">&#x271A; Connect</a>
+					</div>
+
+					<div class="rightcontent">
+						<p><a href="../templates/profile.html" id="viewall">View All</a></p>
+						<!-- <img src="../static/uploads/mic.jpeg"/>
+						<p class="name">Pranav Sonare</p>
+						<a href="#" id="connect5" onclick="changelogo('connect5');">&#x271A; Connect</a> -->
+					</div>
+				</div>
+			</div>
+			<!-- End of right section suggestion user -->
+
+
+			<!-- about us -->
+			<div class="rightfixed">
+				
+				<div class="sidebarright" style="width: 280px;padding: 4px;margin-top: 20px;height: 150px;">
+					<hr style="top: -25px;">
+				<div class="foot">
+
+					<ul>
+						<li><a href="">About</a></li>
+						<li><a href="">Contact</a></li>
+						<li><a href="">Privacy and Policy</a></li>
+						<li><a href="">Help</a></li>
+					</ul>
+					<img src="../static/uploads/logo.png"/>
+					<p>Copyright © www.flooop.com 2021 All Rights Reserved.</p>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(".raam").click(function(){
+ 
+         
+        
+      
+ 
+ var qid=$(this).attr('pid')
+
+  req=$.ajax({
+          url:'/like',
+          type:'POST',
+          data:{pid:qid}
+      });
+     
+ 
+    
+          });
+
+            
+     </script>
+
+</html>

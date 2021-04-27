@@ -15,6 +15,27 @@ body{
 .clearfix:after{clear:both;display:block}
 a{color:inherit;text-decoration:none}
 
+.content{
+	padding-top: 30px;
+}
+
+.sub-content{
+	width: 50%;
+    float: left;
+    padding: 20px;
+}
+.info-content{
+	margin-left: 100px;
+	width: 450px;
+	height: 350px;
+	display: block;
+	/* background-image: url(../images/provost.jpeg); */
+	background-color: #c8c8c8;
+}
+
+.info-content img{
+	background-color: #c8c8c8;
+}
 .login-wrap{
 	width:100%;
 	margin:auto;
